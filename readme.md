@@ -12,7 +12,8 @@ It also features a few macros to provide a more convenient lambda syntax for the
 
 ## Compatibility
 
-This code compiles with VS2017, GCC and CLANG with C++17 features enabled.
+This code compiles only with VSC2017 with experimental C++ features enabled. 
+Clang can't handle constexpr lambdas yet, while GCC can't even use unicode.
 
 
 
