@@ -1,4 +1,4 @@
-# Simple map/reduce header for C++ client side code
+# Simple map/reduce header for C++17 client side code
 
 This is a small project that should help me learn more about C++, but I'm putting it here
 since it might be helpful for new people coming from a more functional background, such as haskell or scala.
@@ -12,7 +12,7 @@ It also features a few macros to provide a more convenient lambda syntax for the
 
 ## Compatibility
 
-This code compiles with VS2017, GCC and CLANG with C++17 features enabled.
+This code compiles with VSC2017 for now. Will upload the actual code once I got it portable enough for at least clang.
 
 
 
