@@ -14,6 +14,8 @@
 constexpr int double_int(int a) { return a * 2; }
 constexpr int add_ints(int a, int b) { return a + b; }
 
+// good practice would be to preface every namespace explicitly 
+// but that is not done here for the sake of brevity
 using namespace std;
 using namespace smr;
 
@@ -27,7 +29,7 @@ int main(const int argc, const char*const argv[])
 	const list<vector<int>> nested{ vector<int>{1,2,3}, vector<int>{4,5,6} };
 	const vector<string> lels{ "lel", "lel", "lel", "lel" };
 
-	// look, terrible boilerplate since it's so generic
+	// the generic version has oh so much boilerplate
 	auto x = accumulate(numbers.begin(), numbers.end(), 0, [](auto a, auto b) {return a + b; });
 	cout << "Sum of numbers is " << x << endl;
 	// but accumulate is just a fold, and a fold with + is a sum
@@ -36,17 +38,17 @@ int main(const int argc, const char*const argv[])
 	cout << "Sum of numbers from array is " << foldl(0, number_array, λn(_ + ...)) << endl; // fold expression
 	cout << "A fold with + is just a sum: " << sum(numbers) << " ; " << sum(lels) << endl;
 
-	// what in insane amount of boilerplate for a simple fmap
+	// what an insane amount of boilerplate for a simple fmap
 	list<int> results{};
 	transform(number_list.begin(), number_list.end(), back_inserter(results), double_int);
 
-	// introduce tostring for arbitrary containers of printables, together with fmap and filter
+	// introduce toString for arbitrary containers of printables, together with fmap and filter
 	cout << "Numbers times two is " << show(fmap<list>(number_list, double_int)) << endl;
 	cout << "You can filter all even numbers, or double all odd ones: "
 		<< show(filter(numbers, λ(_ % 2 == 0))) << " ; "
 		<< show(collect<vector>(numbers, double_int, λ(_ % 2 != 0))) << endl;
 
-	// monadic properties of any sequence may be used as well
+	// monadic properties of sequences may be used as well
 	cout << "Flatmapping numbers to identity, square and cube: " <<
 		// standard lambda syntax pretty boilerplatey here
 		show(flatmap<vector>(numbers, [](int a) {return forward_list<int>{ a, a*a, a*a*a }; })) << endl;
@@ -63,7 +65,7 @@ int main(const int argc, const char*const argv[])
 
 
 	// offer versions of every higher order function with compiletime functions and forced inlining
-	// providing so many types is necessary, since I don't have enough experience to make inference just work
+	// providing so many types is necessary for now, since I don't have enough experience to make inference just work
 	cout << "Inline mapreduce functions with compiletime template functions:" << endl;
 	cout << foldl<vector<int>, int, [](int a, int b) {return a + b; }>(0, numbers) << " ; ";
 	cout << show(fmap<vector, int, int, double_int>(numbers)) << endl;
